@@ -1,0 +1,16 @@
+version: '2'
+
+services:
+  proxy:
+    build: nginx
+    ports:
+      - "80:80"
+    links:
+      - amq
+      - hawtio
+  amq:
+    build: broker
+  hawtio:
+    build: hawtio
+    links:
+      - amq
