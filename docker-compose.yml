@@ -1,16 +1,15 @@
-version: '2'
+version: "2"
 
 services:
   proxy:
     build: nginx
     ports:
       - "80:80"
-    links:
-      - amq
-      - hawtio
   amq:
     build: broker
+    ports:
+      - "61616:61616"
   hawtio:
     build: hawtio
-    links:
-      - amq
+  shop:
+    build: shop

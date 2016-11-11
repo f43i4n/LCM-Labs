@@ -26,5 +26,7 @@ RUN cp target/*.jar ../apache-activemq-5.14.1/lib/
 
 WORKDIR /root/apache-activemq-5.14.1
 
+EXPOSE 61616
+
 CMD bin/activemq console xbean:../conf/activemq-demo.xml
 

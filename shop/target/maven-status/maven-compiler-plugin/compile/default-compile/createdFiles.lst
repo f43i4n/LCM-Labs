@@ -1,0 +1,10 @@
+de\ustutt\iaas\lcm\labs\shop\mock\MockDataPerformer.class
+de\ustutt\iaas\lcm\labs\shop\model\InventoryEntry.class
+de\ustutt\iaas\lcm\labs\shop\persistence\ProductRepository.class
+de\ustutt\iaas\lcm\labs\shop\web\ProductController.class
+de\ustutt\iaas\lcm\labs\shop\web\WebController.class
+de\ustutt\iaas\lcm\labs\shop\model\Product.class
+de\ustutt\iaas\lcm\labs\shop\messaging\Receiver.class
+de\ustutt\iaas\lcm\labs\shop\Application.class
+de\ustutt\iaas\lcm\labs\shop\persistence\InventoryRepository.class
+de\ustutt\iaas\lcm\labs\shop\mock\MockInitializer.class
