@@ -5,16 +5,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.JmsListener;
 
+import javax.jms.Message;
+
 @Configuration
 public class Receiver {
 
-    @JmsListener(destination = "supplyerQueue")
+    @JmsListener(destination = "BestOfferQueue")
     public void receiveMessage(String message) {
         System.out.println("Received: " + message);
-    }
-
-    @JmsListener(destination = "pubSub", containerFactory = "pubSubFactory")
-    public void receiveProduct(Product product) {
-        System.out.println("Received product: " + product.getName());
+        // TODO send json message for ack
     }
 }
