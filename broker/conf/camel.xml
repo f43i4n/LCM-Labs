@@ -34,7 +34,7 @@
      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
   
     <camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
-        <package>de.ustutt.iaas.lcm.labs.example</package>
+        <package>de.ustutt.iaas.lcm.labs.routes</package>
     </camelContext>
 
     <!--
