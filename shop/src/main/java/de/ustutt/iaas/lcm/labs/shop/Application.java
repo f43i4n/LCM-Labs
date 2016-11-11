@@ -27,6 +27,8 @@ import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.Queue;
+
+import java.lang.reflect.Type;
 import java.util.List;
 
 @SpringBootApplication
@@ -60,8 +62,9 @@ public class Application {
 
         @Override
         protected JavaType getJavaTypeForMessage(Message message) throws JMSException {
-            Class type = null;
-            if(((Queue) message.getJMSDestination()).getQueueName() == "BestOfferQueue"){
+            Type type = null;
+            
+            if(message.getJMSDestination().toString().equals("queue://BestOfferQueue")){
                 type = SupplierOffer.class;
             }
             // TODO for each queue

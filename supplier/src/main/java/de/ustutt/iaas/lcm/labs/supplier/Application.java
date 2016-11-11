@@ -18,7 +18,10 @@ import org.springframework.jms.support.converter.MessageType;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 
+import de.ustutt.iaas.lcm.labs.model.AcknowledgeMessage;
 import de.ustutt.iaas.lcm.labs.model.SupplyRequest;
+
+import java.lang.reflect.Type;
 
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
@@ -31,8 +34,13 @@ public class Application {
 	private static class CustomJackson2MessageConverter extends MappingJackson2MessageConverter {
 		
 		@Override
-		protected JavaType getJavaTypeForMessage(Message arg0) throws JMSException {
-			return TypeFactory.defaultInstance().constructType(SupplyRequest.class);
+		protected JavaType getJavaTypeForMessage(Message message) throws JMSException {
+			Type type = AcknowledgeMessage.class;
+			if(message.getJMSDestination().toString().equals("topic://SupplyPubSub")) {
+				type = SupplyRequest.class;
+			}
+			
+			return TypeFactory.defaultInstance().constructType(type);
 		}
 		
 	}
@@ -40,7 +48,7 @@ public class Application {
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
 
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
     @Bean // Serialize message content to json using TextMessage

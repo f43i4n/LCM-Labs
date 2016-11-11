@@ -30,6 +30,8 @@ public class Receiver {
 
     @JmsListener(destination = BEST_OFFER_QUEUE)
     public AcknowledgeMessage receiveMessage(SupplierOffer supplierOffer) {
+    	
+    	logger.error("received offer with product: " + supplierOffer.getProductID());
 
         // check if product is available in the inventory
         // if not send bad acknowledgement message

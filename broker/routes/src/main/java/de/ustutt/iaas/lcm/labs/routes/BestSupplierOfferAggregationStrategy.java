@@ -14,7 +14,7 @@ public class BestSupplierOfferAggregationStrategy implements AggregationStrategy
 		JSONObject oldBid = new JSONObject(oldExchange.getIn().getBody(String.class));
 		JSONObject newBid = new JSONObject(newExchange.getIn().getBody(String.class));
 		
-		if(newBid.getJSONObject("body").getDouble("price") < oldBid.getJSONObject("body").getDouble("price")) {
+		if(newBid.getDouble("price") < oldBid.getDouble("price")) {
 			return newExchange;
 		} else {
 			return oldExchange;
