@@ -25,7 +25,7 @@ import java.util.UUID;
 @RequestMapping("/operations")
 public class OperationsController {
 
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     // Topics
     private final String SUPPLY_PUBSUB = "SupplyPubSub";
