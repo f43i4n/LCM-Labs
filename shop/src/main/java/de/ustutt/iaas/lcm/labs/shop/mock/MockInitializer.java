@@ -46,10 +46,10 @@ public class MockInitializer {
     }
 
     private int randomInt(){
-        return new Random().nextInt(100)+0;
+        return new Random().nextInt(10)+0;
     }
 
     private float randomFloat(){
-        return new Random().nextFloat()+10;
+        return new Random().nextFloat()+0;
     }
 }

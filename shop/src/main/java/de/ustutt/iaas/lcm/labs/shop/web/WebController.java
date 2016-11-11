@@ -49,7 +49,7 @@ public class WebController {
 
         // product details link
         html.append("</ul>");
-        html.append("<a href='/products'>See all products in detail</a>");
+        html.append("<a href='/operations/sendSupplyRequest'>Send supply request</a>");
 
         return html.toString();
     }
