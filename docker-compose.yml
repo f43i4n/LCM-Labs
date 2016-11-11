@@ -13,3 +13,6 @@ services:
     build: hawtio
   shop:
     build: shop
+  supplier:
+    build: supplier
+ 
