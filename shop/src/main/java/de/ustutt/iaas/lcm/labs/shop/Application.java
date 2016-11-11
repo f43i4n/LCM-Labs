@@ -1,7 +1,11 @@
 package de.ustutt.iaas.lcm.labs.shop;
 
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
 import de.ustutt.iaas.lcm.labs.shop.model.InventoryEntry;
 import de.ustutt.iaas.lcm.labs.shop.model.Product;
+import de.ustutt.iaas.lcm.labs.shop.model.SupplierOffer;
+import de.ustutt.iaas.lcm.labs.shop.model.SupplyRequest;
 import de.ustutt.iaas.lcm.labs.shop.persistence.InventoryRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,6 +24,9 @@ import org.springframework.jms.support.converter.MessageConverter;
 import org.springframework.jms.support.converter.MessageType;
 
 import javax.jms.ConnectionFactory;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.Queue;
 import java.util.List;
 
 @SpringBootApplication
@@ -34,9 +41,8 @@ public class Application {
 
     @Bean // Serialize message content to json using TextMessage
     public MessageConverter jacksonJmsMessageConverter() {
-        MappingJackson2MessageConverter converter = new MappingJackson2MessageConverter();
+        MappingJackson2MessageConverter converter = new CustomJackson2MessageConverter();
         converter.setTargetType(MessageType.TEXT);
-        converter.setTypeIdPropertyName("_type");
         return converter;
     }
 
@@ -47,5 +53,20 @@ public class Application {
         configurer.configure(factory, connectionFactory);
         factory.setPubSubDomain(true);
         return factory;
+    }
+
+    // Custom type converter
+    private static class CustomJackson2MessageConverter extends MappingJackson2MessageConverter {
+
+        @Override
+        protected JavaType getJavaTypeForMessage(Message message) throws JMSException {
+            Class type = null;
+            if(((Queue) message.getJMSDestination()).getQueueName() == "BestOfferQueue"){
+                type = SupplierOffer.class;
+            }
+            // TODO for each queue
+            return TypeFactory.defaultInstance().constructType(type);
+        }
+
     }
 }

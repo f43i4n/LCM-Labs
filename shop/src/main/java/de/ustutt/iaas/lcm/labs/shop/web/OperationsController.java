@@ -4,6 +4,7 @@ import de.ustutt.iaas.lcm.labs.shop.Application;
 import de.ustutt.iaas.lcm.labs.shop.model.InventoryEntry;
 import de.ustutt.iaas.lcm.labs.shop.model.SupplyRequest;
 import de.ustutt.iaas.lcm.labs.shop.persistence.InventoryRepository;
+import org.apache.activemq.command.ActiveMQMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +17,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.jms.Message;
+import javax.jms.TextMessage;
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/operations")
 public class OperationsController {
 
     private static final Logger logger = LoggerFactory.getLogger(Application.class);
+
+    // Topics
+    private final String SUPPLY_PUBSUB = "SupplyPubSub";
 
     @Autowired
     private JmsTemplate jmsTemplate;
@@ -32,7 +40,7 @@ public class OperationsController {
      * Method to send a supply request for all products
      * where the amout is under 5.
      *
-     * @return the product
+     * @return HTML message
      */
     @RequestMapping(value = "/sendSupplyRequest", method = RequestMethod.GET)
     public String sendSupplyRequest() {
@@ -46,7 +54,7 @@ public class OperationsController {
         for (InventoryEntry i : inventory){
             if(i.getAmount() < 5){
                 count++;
-                jmsTemplate.convertAndSend("SupplyPubSub", new SupplyRequest(i.getId(),5));
+                jmsTemplate.convertAndSend(SUPPLY_PUBSUB, new SupplyRequest(i.getId(),5));
                 logger.info("Supply request send for product id=" + i.getId() + " and amount=" + 5);
             }
         }
