@@ -15,7 +15,7 @@ import java.util.Random;
 @Component
 public class MockInitializer {
 
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private InventoryRepository inventoryRepository;
     private ProductRepository productRepository;

@@ -18,7 +18,7 @@ import javax.jms.Message;
 @Configuration
 public class Receiver {
 
-    private static final Logger logger = LoggerFactory.getLogger(Application.class);
+    private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Autowired
     private InventoryRepository inventoryRepository;
